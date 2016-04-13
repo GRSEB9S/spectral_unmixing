@@ -1,3 +1,7 @@
+# This code is intended to be used in a GRASS-GIS session, to make
+# use of the raster and vectorial data stored in the database
+# It uses grass scripting library and orfeo toolbox python wrapper 
+
 export PYTHONPATH="${PYTHONPATH}:/usr/lib/otb/python"
 export OTB_APPLICATION_PATH=/usr/lib/otb/applications
 
