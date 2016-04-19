@@ -1,6 +1,5 @@
 import click
 import glob, os, argparse
-from schema import Schema, And, Or, Use, SchemaError
 from osgeo import gdal
 from osgeo.gdalconst import *
 from numpy import *
@@ -16,14 +15,13 @@ def cli(infolder,outfile):
 	The input folder should contain a time series of images in the same projection and
 	with constant number of rows and columns in any GDAL supported format.
 
-	The output file is a multi band Geotiff image containing the amplitud and phase of 
+	The output file is a multi band Geotiff image containing the amplitude and phase of 
 	the different harmonics. 
 	
-	You can test the program downloading the sample images from: 
+	You can test the program downloading the sample images from:\n
 	https://github.com/leohardtke/some_code/tree/master/FourierExtraction/test_images
 
 	"""
-
 	DirName = infolder
 	Ext = "tif"
 	file_list=glob.glob(DirName+"/*."+Ext)
