@@ -1,44 +1,30 @@
-#Usage: python fourer_parameters_TimeSeriesRaster.py input_folder extension output_file
-
+import click
 import glob, os, argparse
-try:
-    from schema import Schema, And, Or, Use, SchemaError
-except ImportError:
-    exit('This example requires that `schema` data-validation library installed\n'
-         'https://github.com/halst/schema')
-try:
-    from osgeo import gdal
-except ImportError:
-    exit('This program needs GDAL: Geospatial Data Abstraction Library\n'
-	'https://pypi.python.org/pypi/GDAL/')
+from schema import Schema, And, Or, Use, SchemaError
+from osgeo import gdal
+from osgeo.gdalconst import *
+from numpy import *
+from scipy import *
 
-try:
-    from osgeo.gdalconst import *
-except ImportError:
-    exit('This program needs GDAL: Geospatial Data Abstraction Library\n'
-	'https://pypi.python.org/pypi/GDAL/')
+@click.command()
+@click.argument('infolder',type=click.Path(exists=True))
+@click.argument('outfile')
 
-try:
-    from numpy import *
-except ImportError:
-    exit('This program needs numpy\n'
-	'https://pypi.python.org/pypi/numpy/')
+def cli(infolder,outfile):
+	"""This program extracts the phenological parameters of a remote sensing time series.
 
-try:
-    from scipy import *
-except ImportError:
-    exit('This program needs scipy\n'
-	'https://pypi.python.org/pypi/scipy/')
+	The input folder should contain a time series of images in the same projection and
+	with constant number of rows and columns in a GDAL supported format
+	
+	"""
 
-
-def main(args):
-	DirName = args.infolder
-	Ext = args.extension
+	DirName = infolder
+	Ext = "tif"
 	file_list=glob.glob(DirName+"/*."+Ext)
 	file_list.sort()
 	#Use the first image on the folder as source foor the geographic information
 	src_file = file_list[0]
-	dst_file = args.outfile
+	dst_file = outfile
 	#Processing block size (could be argument)
 	xBlockSize = yBlockSize =256
 	# Open source file
@@ -95,14 +81,4 @@ def main(args):
 		outband=outband+1
 
 	dst_ds = None
-
-if __name__ == '__main__':
-	parser = argparse.ArgumentParser()
-	parser.add_argument("infolder",help="Input folder containing the time series",type=str)
-	parser.add_argument("extension",help="Extention of the images input folder",type=str)
-	parser.add_argument("outfile",help="Output file name",type=str)
-	args = parser.parse_args()
-	# Check for images in folder (same rows*cols)
-	# Check outdir
-	main(args)
 
