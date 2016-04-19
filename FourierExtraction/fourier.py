@@ -11,11 +11,17 @@ from scipy import *
 @click.argument('outfile')
 
 def cli(infolder,outfile):
-	"""This program extracts the phenological parameters of a remote sensing time series.
+	"""This program extracts the Fourier parameters of a remote sensing time series.
 
 	The input folder should contain a time series of images in the same projection and
-	with constant number of rows and columns in a GDAL supported format
+	with constant number of rows and columns in any GDAL supported format.
+
+	The output file is a multi band Geotiff image containing the amplitud and phase of 
+	the different harmonics. 
 	
+	You can test the program downloading the sample images from: 
+	https://github.com/leohardtke/some_code/tree/master/FourierExtraction/test_images
+
 	"""
 
 	DirName = infolder
