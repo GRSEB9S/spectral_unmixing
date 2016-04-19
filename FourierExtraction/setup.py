@@ -1,14 +1,15 @@
 from setuptools import setup
 
 setup(
-    name='fourier.py',
+    name='fourier_extract',
     version='0.1',
-    py_modules=['fourier'],
+    py_modules=['fourier_extract'],
     install_requires=[
-        'Click','gdal','numpy','scipy'
+        'Click',
     ],
     entry_points='''
         [console_scripts]
-        fourer.py=fourier.py:cli
+        fourier_extract=fourier_extract:cli
     ''',
 )
+
