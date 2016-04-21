@@ -34,9 +34,9 @@ A raster layer of abundance of endmembers for each "class id"
 
 clip_group_region gn subfix roi nullval
  
-endarray=endmembers_from_vector vname,gn 
+endarray endmembers_from_vector vname,gn 
 
-endarray_to_raster endarray,endrastname 
+endarray_to_raster endarray endrastname 
 
-unmix raster,endmembers,out,"ucls" 
+unmix raster endmembers out "ucls" 
 
