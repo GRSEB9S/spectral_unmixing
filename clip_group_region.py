@@ -1,6 +1,7 @@
 import click
 import grass.script as gscript
 from grass.script.core import gisenv
+import os
 
 @click.command(options_metavar='<Argumenst>')
 @click.argument('groupname',metavar='Imagery_group')
@@ -15,6 +16,8 @@ def main(**kwargs):
     	Optionaly it set the null values of the output group
     
 	Example: clip_group_region LE72270902000209EDC00_toar madryn madryn --overwrite"""
+	if os.path.exists("outputs/")==False:
+		os.makedirs("outputs")
     	roi = kwargs['roi']
 	groupname = kwargs['groupname']
 	subfix = kwargs['subfix']
@@ -34,7 +37,9 @@ def main(**kwargs):
         	gscript.run_command('r.null', map="{rout}.{b}".format(rout=rout,b=band),setnull=nullval)
     	mlist=gscript.list_grouped('raster', pattern=groupname+"_"+subfix+"*")[gisenv()['MAPSET']]
     	gscript.run_command("i.group", group=groupname+"_"+subfix, input=mlist)
-    	return
+	for img in mlist:
+		gscript.run_command("r.out.gdal",input=img, output="outputs/"+img+".tif" ,format="GTiff" )
+	return
 
 
 if __name__ == '__main__':

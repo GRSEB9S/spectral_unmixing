@@ -11,9 +11,8 @@ setup(
     entry_points='''
         [console_scripts]
         clip_group_region=clip_group_region:main
-	endmembers_from_vector=endmembers_from_vector:main
-	endarray_to_raster=endarray_to_raster:main
+	end_rast_from_vect=end_rast_from_vect:main
 	export_endmembers=export_endmembers:main
-	unmix=unmix:main
+	#unmix=unmix:main
     ''',
 )
