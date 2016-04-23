@@ -16,8 +16,9 @@ def main(**kwargs):
     	Optionaly it set the null values of the output group
     
 	Example: clip_group_region LE72270902000209EDC00_toar madryn madryn --overwrite"""
+	wd="outputs"
 	if os.path.exists("outputs/")==False:
-		os.makedirs("outputs")
+		os.makedirs(wd)
     	roi = kwargs['roi']
 	groupname = kwargs['groupname']
 	subfix = kwargs['subfix']
@@ -31,14 +32,22 @@ def main(**kwargs):
         	rout= name.split(".")[0]+"_"+subfix
         	expression="{rout}.{b} = {rin}".format(rin=name,rout=rout,b=band)
 		if overwrite == True:
-				gscript.run_command('r.null', map="{rout}.{b}".format(rout=rout,b=band),setnull=nullval,overwrite=True)
+			gscript.mapcalc(expression,overwrite=True)
 		if overwrite == False:		
 			gscript.mapcalc(expression)                                                          
         	gscript.run_command('r.null', map="{rout}.{b}".format(rout=rout,b=band),setnull=nullval)
     	mlist=gscript.list_grouped('raster', pattern=groupname+"_"+subfix+"*")[gisenv()['MAPSET']]
     	gscript.run_command("i.group", group=groupname+"_"+subfix, input=mlist)
 	for img in mlist:
-		gscript.run_command("r.out.gdal",input=img, output="outputs/"+img+".tif" ,format="GTiff" )
+		print(expression)		
+		if overwrite == True:
+			gscript.run_command("r.out.gdal",input=img, output=wd+"/"+img+".tif", format="GTiff",overwrite=True)
+		if overwrite == False:		
+			gscript.run_command(expression) 
+	flist=[wd+"/"+orig+".tif" for orig in mlist]
+	expression="/usr/bin/gdal_merge.py -o {wd}/{out}_{sf}.tif -separate {inlist}".format(wd=wd,out=groupname,inlist=' '.join(flist),sf=subfix)   
+	print(expression)
+	os.system(expression)       
 	return
 
 

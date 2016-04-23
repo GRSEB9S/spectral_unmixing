@@ -13,6 +13,6 @@ setup(
         clip_group_region=clip_group_region:main
 	end_rast_from_vect=end_rast_from_vect:main
 	export_endmembers=export_endmembers:main
-	#unmix=unmix:main
+	unmix=unmix:main
     ''',
 )
