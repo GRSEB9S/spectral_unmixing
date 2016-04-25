@@ -7,7 +7,9 @@ This utilities depends on the HyperspectralUnmixing program of the Orfeo Toolbox
 
 The project contains three utilities:
 - clip_group_region: This utility clips, exports and stacks all the images of a GRASS image group (As otb_Hyperspectral_unmixing needs). The output raster name will be like: `originalname_subfix` and will be stored in the `wd` folder. Optionally it set the null values of the output images.
+
 -end_rast_from_vect:  This utility creates the endmembers raster image (end_raster) to use for unmixing. The endmembers will be stored as a multiband image, so that each band (b) holds the mean reflectance value of the (e) endmembers, resulting in a b x 1 x e raster. It takes the location of the pure pixels for each class from the point vector (endmember_location) and the column `class_column`.
+
 - unmix: This utility performes spectral unmixing of the images stored in the 'gname' group, using the endmembers created with `end_rast_from_vect`
 
 The table below shows the arguments needed for each utility. 
@@ -47,7 +49,7 @@ This program uses GRASS and Orfeo Toolbox. To install in Ubuntu/Mint/Debian open
 
 To install the pipeline:
 
-git clone https://github.com/leohardtke/spectral_unmixing.git`
+`git clone https://github.com/leohardtke/spectral_unmixing.git`
 
 
 - Install the application 
