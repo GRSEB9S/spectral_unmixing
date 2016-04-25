@@ -30,7 +30,7 @@ def main(**kwargs):
 	nullval = kwargs['nullval']
 	""" Create the output folder if not present """
 	overwrite = kwargs['overwrite']
-		if os.path.exists(wd)==False:
+	if os.path.exists(wd)==False:
 		os.makedirs(wd)
 	"""  Set GRASS working region """
     	gscript.run_command('g.region', region=roi)
